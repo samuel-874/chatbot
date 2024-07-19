@@ -35,8 +35,6 @@ class HttpService {
   }
 
   Future<Response?> post(String path, Map data, {bool? authenticated}) async {
-    _dio.options.baseUrl = 'http://192.168.0.155:8082/api/v1/';
-    print(_dio.options.baseUrl + path);
 
     if (authenticated != null) {
 
@@ -57,8 +55,18 @@ class HttpService {
     return null;
   }
 
-  Future<Response?> get(String path) async {
+  Future<Response?> get(String path,{bool? authenticated}) async {
+    print(_dio.options.baseUrl);
     try {
+      if (authenticated != null) {
+        if (authenticated) {
+          String bearerToken = await StorageService().getItem("jwt_token");
+          if (bearerToken != null) {
+            _dio.options.headers["Authorization"] = "Bearer $bearerToken";
+          }
+        }
+      }
+
       final response = await _dio.get(path);
       return response;
     } catch (e) {

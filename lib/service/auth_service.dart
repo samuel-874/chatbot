@@ -31,7 +31,6 @@ class AuthService {
       var message = response!.data;
       if (response.statusCode! >= 400) {
         final customResponse = CustomResponse.fromJson(message);
-        print("status_code ${customResponse.message}");
         if (customResponse.validationErrors != null &&
             customResponse.validationErrors!.isNotEmpty) {
           customResponse.validationErrors?.forEach((each) {
@@ -79,7 +78,7 @@ class AuthService {
       showOverlayNotification((context) {
         return notifcationCard(
             context,
-            "An Error Occured",
+            "An Error Occurred",
             "Please check you network connection",
             const Icon(
               Icons.error_outline_rounded,
@@ -95,7 +94,9 @@ class AuthService {
     try {
       Response? response = await _httpService.post(
           "auth/user/authenticate", {"email": email, "password": password});
-      print("status_code: ${response!.statusCode}");
+      if(response == null){
+        return false;
+      }
       if (response.statusCode! >= 400 && response.data != null) {
         final customResponse = CustomResponse.fromJson(response.data);
         if (customResponse.validationErrors != null &&

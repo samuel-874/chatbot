@@ -12,15 +12,31 @@ class ChatRoom extends ChangeNotifier{
       required this.date,
     });
 
+    factory ChatRoom.fromServerJson(Map data){
+      return ChatRoom(
+          chatRoomId: data["id"],
+          title: data["title"]??'No title',
+          date: DateTime.now().toString())
+      ;
+    }
+
     initChatRoom(){
       chatRoomId = null;
       title = 'New Chat';
-      date = DateTime.now().toString();
+      date = 'new_chat';
+      notifyListeners();
     }
 
     updateChatRoom({required int chatRoomId,required title, required String date}){
-        chatRoomId = chatRoomId;
-        title = title;
-        date = date;
+        this.chatRoomId = chatRoomId;
+        this.title = title;
+        this.date = date;
+        notifyListeners();
+    }
+
+    updateChatRoomNotNotify({required int chatRoomId,required title, required String date}){
+        this.chatRoomId = chatRoomId;
+        this.title = title;
+        this.date = date;
     }
 }

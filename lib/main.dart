@@ -19,12 +19,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.white,
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.white,
-      systemNavigationBarIconBrightness: Brightness.dark,
-    ));
+    SystemChrome.setSystemUIOverlayStyle(_getSystemUIStyles());
 
     return OverlaySupport.global(
         child: MaterialApp(
@@ -36,17 +31,26 @@ class MyApp extends StatelessWidget {
               headlineMedium: GoogleFonts.roboto(fontSize: 36,fontStyle: FontStyle.italic),
               headlineSmall: GoogleFonts.roboto(fontSize: 14)
             ),
-          colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 11, 100, 209)),
+          colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 11, 100, 209)),
           useMaterial3: true,
           scaffoldBackgroundColor: Colors.white),
       initialRoute: "/",
       routes: {
-        "/login": (context) => LoginPage(),
-        "/signup": (context) => SignupPage(),
+        "/login": (context) => const LoginPage(),
+        "/signup": (context) => const SignupPage(),
         "/home": (context) => RouteAuthenticated(child: HomePage()),
         "/": (context) => SplashScreen(),
-        "/forgotten_password": (context) => ForgottenPasswordPage(),
+        "/forgotten_password": (context) => const ForgottenPasswordPage(),
       },
     ));
+  }
+
+  SystemUiOverlayStyle _getSystemUIStyles() {
+    return const SystemUiOverlayStyle(
+    statusBarColor: Colors.white,
+    statusBarIconBrightness: Brightness.dark,
+    systemNavigationBarColor: Colors.white,
+    systemNavigationBarIconBrightness: Brightness.dark,
+  );
   }
 }

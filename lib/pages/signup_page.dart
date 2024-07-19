@@ -151,8 +151,6 @@ class _SingupPageState extends ConsumerState<SignupPage> {
     SharedPreferences.getInstance().then(
       (value) => value.setBool("remember_me", rememberMe),
     );
-    print(
-        "${fullNameControler.text}, ${emailController.text}, ${passwordController.text}");
     ref.read(formLoadStateProvider.notifier).state = true;
     bool signUpSuccessful = await _authService.register(
         fullNameControler.text, emailController.text, passwordController.text);
